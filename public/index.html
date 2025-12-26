@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GothiCursed - Black Spike Watches</title>
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            background: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .gothic-text {
+            font-family: 'UnifrakturMaguntia', 'Georgia', serif;
+            letter-spacing: 2px;
+        }
+        header {
+            background: #111111;
+            padding: 0.8rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #ffffff;
+        }
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .nav-link:hover {
+            color: #cccccc;
+        }
+        .cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        main {
+            margin-top: 70px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        .hero {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #000000 0%, #111111 100%);
+            border-bottom: 3px solid #ffffff;
+        }
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+        }
+        .hero p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .cta-button:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .product-card {
+            background: #111111;
+            border: 2px solid #333333;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            border-color: #ffffff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+        .product-image {
+            height: 180px;
+            background: #222222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            border-bottom: 2px solid #333333;
+        }
+        .product-info {
+            padding: 1rem;
+        }
+        .product-name {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .product-description {
+            color: #cccccc;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .gallery {
+            position: relative;
+        }
+        .main-image {
+            height: 300px;
+            background: #222222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            border: 2px solid #333333;
+            margin-bottom: 1rem;
+        }
+        .thumbnail-gallery {
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+        }
+        .thumbnail {
+            width: 70px;
+            height: 70px;
+            background: #222222;
+            border: 2px solid #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .thumbnail:hover, .thumbnail.active {
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+        .detail-info {
+            padding: 1.5rem;
+            background: #111111;
+            border: 2px solid #333333;
+        }
+        .detail-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .price-section {
+            margin-bottom: 1.5rem;
+        }
+        .original-price {
+            font-size: 1.3rem;
+            color: #cccccc;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+        }
+        .discounted-price {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+        .discount-badge {
+            background: #ffffff;
+            color: #000000;
+            padding: 0.2rem 0.5rem;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            display: inline-block;
+        }
+        .detail-description {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            border: 2px solid #ffffff;
+        }
+        .btn-primary:hover {
+            background: #000000;
+            color: #ffffff;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+        }
+        .btn-secondary:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            background: #111111;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #333333;
+            gap: 1rem;
+        }
+        .cart-item-image {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        .cart-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin: 0.5rem 0;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #ffffff;
+            background: #000000;
+            color: #ffffff;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .quantity-btn:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 1rem;
+        }
+        .about-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .about-content p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+        .checkout-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: #111111;
+            border: 2px solid #333333;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        .free-shipping {
+            background: #111111;
+            border: 2px solid #ffffff;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .order-summary {
+            background: #111111;
+            padding: 1.5rem;
+            border: 2px solid #333333;
+            margin-top: 1.5rem;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid #333333;
+            font-size: 0.95rem;
+        }
+        .total {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .nav-link {
+                font-size: 0.8rem;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            .product-image {
+                height: 150px;
+                font-size: 3rem;
+            }
+            .product-detail {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .main-image {
+                height: 250px;
+                font-size: 4rem;
+            }
+            .detail-name {
+                font-size: 1.5rem;
+            }
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .cta-button {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .about-content h2 {
+                font-size: 1.5rem;
+            }
+            .cart-item {
+                flex-wrap: wrap;
+            }
+        }
+        @media (max-width: 480px) {
+            nav {
+                padding: 0 0.8rem;
+            }
+            .logo {
+                font-size: 1rem;
+                gap: 5px;
+            }
+            .nav-link {
+                font-size: 0.7rem;
+            }
+            .cart-icon {
+                font-size: 1.1rem;
+            }
+            .container {
+                padding: 0.8rem;
+            }
+            .hero {
+                padding: 1.5rem 0.8rem;
+            }
+            .hero h1 {
+                font-size: 1.3rem;
+            }
+            .hero p {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+            .cta-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            .product-image {
+                height: 120px;
+                font-size: 2.5rem;
+            }
+            .product-info {
+                padding: 0.8rem;
+            }
+            .product-name {
+                font-size: 0.95rem;
+            }
+            .product-price {
+                font-size: 1.1rem;
+            }
+            .product-description {
+                font-size: 0.75rem;
+            }
+            .main-image {
+                height: 200px;
+                font-size: 3.5rem;
+            }
+            .detail-info {
+                padding: 1rem;
+            }
+            .detail-name {
+                font-size: 1.3rem;
+            }
+            .original-price {
+                font-size: 1rem;
+            }
+            .discounted-price {
+                font-size: 1.3rem;
+            }
+            .detail-description {
+                font-size: 0.85rem;
+            }
+            .btn {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+            .about-content h2 {
+                font-size: 1.3rem;
+            }
+            .about-content p {
+                font-size: 0.9rem;
+            }
+            .form-group label {
+                font-size: 0.9rem;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                font-size: 0.9rem;
+            }
+            .free-shipping {
+                font-size: 0.95rem;
+            }
+            .summary-row {
+                font-size: 0.9rem;
+            }
+        }
+        .hidden {
+            display: none;
+        }
+        footer {
+            background: #111111;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            border-top: 2px solid #ffffff;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo gothic-text">🖤 GothiCursed</div>
+            <div class="nav-links">
+                <a class="nav-link" onclick="showPage('home')">Home</a>
+                <a class="nav-link" onclick="showPage('shop')">Shop</a>
+                <a class="nav-link" onclick="showPage('about')">About</a>
+                <div class="cart-icon" onclick="showPage('cart')">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div id="home" class="page">
+            <div class="container">
+                <section class="hero">
+                    <h1 class="gothic-text">GothiCursed</h1>
+                    <p>Black Spike Watches | Pure Gothic Elegance | FREE Shipping</p>
+                    <button class="cta-button" onclick="showPage('shop')">SHOP COLLECTION</button>
+                </section>
+                <div class="products-grid" id="featuredProducts"></div>
+            </div>
+        </div>
+
+        <div id="shop" class="page hidden">
+            <div class="container">
+                <h2 class="gothic-text" style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">FULL COLLECTION</h2>
+                <div class="products-grid" id="allProducts"></div>
+            </div>
+        </div>
+
+        <div id="productDetail" class="page hidden">
+            <div class="container">
+                <button class="btn btn-secondary" style="width: auto; margin-bottom: 1.5rem; padding: 0.6rem 1.5rem; font-size: 0.9rem;" onclick="showPage('shop')">← Back to Shop</button>
+                <div class="product-detail" id="productDetailContent"></div>
+            </div>
+        </div>
+
+        <div id="about" class="page hidden">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="gothic-text">ABOUT GOTHICURSED</h2>
+                    <p>Handcrafted spike watches from India. Every piece is soldered with precision and gothic soul.</p>
+                    <p>Our watches are more than timepieces - they're statements of darkness and rebellion.</p>
+                    <p>✓ Premium stainless steel | ✓ Hand-soldered spikes | ✓ FREE Shipping</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="cart" class="page hidden">
+            <div class="container">
+                <h2 class="gothic-text" style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">YOUR CART</h2>
+                <div id="cartItems"></div>
+                <div id="cartEmpty" style="text-align: center; font-size: 1rem; color: #cccccc;">
+                    Your cart is empty. <a href="#" onclick="showPage('shop')" style="color: #ffffff; text-decoration: underline;">Shop now</a>
+                </div>
+                <div id="checkoutButton" class="hidden" style="max-width: 400px; margin: 1.5rem auto;">
+                    <button class="btn btn-primary" onclick="showPage('checkout')">PROCEED TO CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkout" class="page hidden">
+            <div class="container">
+                <h2 class="gothic-text" style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">CHECKOUT</h2>
+                <div class="checkout-form">
+                    <div class="free-shipping">
+                        🚚 <strong>FREE Shipping All Over India</strong>
+                    </div>
+                    <form id="checkoutForm">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" id="customerName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email *</label>
+                            <input type="email" id="customerEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="customerPhone" required pattern="[0-9]{10}">
+                        </div>
+                        <div class="form-group">
+                            <label>Address *</label>
+                            <textarea id="customerAddress" rows="2" required placeholder="House number, street, area"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Landmark *</label>
+                            <input type="text" id="customerLandmark" required placeholder="Near [landmark]">
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode *</label>
+                            <input type="text" id="customerPincode" required pattern="[0-9]{6}">
+                        </div>
+                        <div class="form-group">
+                            <label>District *</label>
+                            <input type="text" id="customerDistrict" required>
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <input type="text" id="customerState" required placeholder="Kerala, Maharashtra, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label>Payment Method *</label>
+                            <select id="paymentMethod" required onchange="updateSummary()">
+                                <option value="">Select Payment</option>
+                                <option value="razorpay">💳 Razorpay (Card/UPI) - Full Payment</option>
+                                <option value="cod">📦 Cash on Delivery - ₹100 Advance</option>
+                            </select>
+                        </div>
+                    </form>
+                    <div class="order-summary">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="summarySubtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping</span>
+                            <span>FREE</span>
+                        </div>
+                        <div class="summary-row" id="codAdvanceRow" style="display: none;">
+                            <span>COD Advance</span>
+                            <span>₹100</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="total">Total</span>
+                            <span class="total" id="summaryTotal">₹0</span>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="confirmOrder()">PLACE ORDER</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPage('cart')">BACK TO CART</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="orderConfirm" class="page hidden">
+            <div class="container" style="text-align: center; padding: 2rem 1rem;">
+                <h1 class="gothic-text" style="font-size: 2rem; margin-bottom: 1.5rem;">✅ ORDER CONFIRMED!</h1>
+                <div id="orderDetails" style="font-size: 0.95rem; margin-bottom: 1.5rem; color: #cccccc; text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;"></div>
+                <button class="btn btn-primary" onclick="showPage('shop')" style="max-width: 250px; margin-left: auto; margin-right: auto;">CONTINUE SHOPPING</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="gothic-text">&copy; 2025 GothiCursed. All rights reserved.</p>
+        <p>Instagram: <strong>@gothicursed</strong> | FREE Shipping all over India</p>
+    </footer>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Obsidian Spike",
+                originalPrice: 6999,
+                price: 4999,
+                discount: 28,
+                shortDesc: "Black steel with premium spikes",
+                fullDesc: "Forged from premium stainless steel with hand-soldered spikes. Matte black PVD coating. Japanese movement. Water resistant 5ATM.",
+                images: ["🖤⌚", "🔥⌚", "⚡⌚", "💀⌚"]
+            },
+            {
+                id: 2,
+                name: "Midnight Reaper",
+                originalPrice: 7999,
+                price: 5999,
+                discount: 25,
+                shortDesc: "Skeleton design with spikes",
+                fullDesc: "Exposed skeleton movement. Triple-layered spikes with death motif. Black ceramic bezel. Glow-in-dark markers.",
+                images: ["⚰️⌚", "🖤⌚", "💀⌚", "🌙⌚"]
+            },
+            {
+                id: 3,
+                name: "Gothic Crown",
+                originalPrice: 8999,
+                price: 6499,
+                discount: 27,
+                shortDesc: "Crown spike design",
+                fullDesc: "Luxury design with crown spikes. Sapphire crystal glass. Chronograph function. Italian leather strap.",
+                images: ["👑⌚", "🖤⌚", "💎⌚", "🔥⌚"]
+            },
+            {
+                id: 4,
+                name: "Raven's Eye",
+                originalPrice: 5999,
+                price: 4499,
+                discount: 25,
+                shortDesc: "Minimalist eye detail",
+                fullDesc: "Subtle gothic elegance with raven eye centerpiece. Single row spikes on bezel. Ultra-light titanium case.",
+                images: ["👁️⌚", "🖤⌚", "🌙⌚", "⚡⌚"]
+            },
+            {
+                id: 5,
+                name: "Death Metal",
+                originalPrice: 10999,
+                price: 7999,
+                discount: 27,
+                shortDesc: "Heavy metal chain strap",
+                fullDesc: "Industrial-grade stainless steel with chain-link strap. Multi-layered spikes. Skeleton dial with death scythe hands.",
+                images: ["💀⌚", "🔗⌚", "⚰️⌚", "🔥⌚"]
+            },
+            {
+                id: 6,
+                name: "Shadow Punk",
+                originalPrice: 7499,
+                price: 5499,
+                discount: 26,
+                shortDesc: "Punk-goth fusion",
+                fullDesc: "Street punk meets gothic elegance. Customizable spike patterns. Canvas strap with metal rivets. Glow hands.",
+                images: ["🔗⌚", "🖤⌚", "⚡⌚", "💥⌚"]
+            }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('gothicursed_cart')) || [];
+        let currentProductId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderFeaturedProducts();
+            renderProducts();
+            showPage('home');
+        });
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            if (pageId === 'shop') renderProducts();
+            if (pageId === 'cart') renderCart();
+            if (pageId === 'checkout') updateSummary();
+            if (pageId === 'home') renderFeaturedProducts();
+        }
+
+        function renderFeaturedProducts() {
+            const featured = products.slice(0, 3);
+            document.getElementById('featuredProducts').innerHTML = featured.map(p => createProductCard(p)).join('');
+        }
+
+        function renderProducts() {
+            document.getElementById('allProducts').innerHTML = products.map(p => createProductCard(p)).join('');
+        }
+
+        function createProductCard(product) {
+            return `
+                <div class="product-card" onclick="showProductDetail(${product.id})">
+                    <div class="product-image">${product.images[0]}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">₹${product.price.toLocaleString()}</div>
+                        <div class="product-description">${product.shortDesc}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            currentProductId = productId;
+            
+            document.getElementById('productDetailContent').innerHTML = `
+                <div class="gallery">
+                    <div class="main-image" id="mainProductImage">${product.images[0]}</div>
+                    <div class="thumbnail-gallery">
+                        ${product.images.map((img, index) => 
+                            `<div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage(${index})">${img}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+                <div class="detail-info">
+                    <div class="detail-name">${product.name}</div>
+                    <div class="price-section">
+                        <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                        <span class="discounted-price">₹${product.price.toLocaleString()}</span>
+                        <span class="discount-badge">${product.discount}% OFF</span>
+                    </div>
+                    <div class="detail-description">${product.fullDesc}</div>
+                    <button class="btn btn-primary" onclick="addToCart(${product.id})" id="addToCartBtn">ADD TO CART</button>
+                    <button class="btn btn-secondary" onclick="showPage('cart')">VIEW CART</button>
+                </div>
+            `;
+            showPage('productDetail');
+        }
+
+        function changeMainImage(index) {
+            const product = products.find(p => p.id === currentProductId);
+            document.getElementById('mainProductImage').textContent = product.images[index];
+            
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({...product, quantity: 1});
+            }
+            
+            localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
+            updateCartCount();
+            
+            const button = document.getElementById('addToCartBtn');
+            const originalText = button.textContent;
+            button.textContent = 'ADDED!';
+            button.style.background = '#cccccc';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '#ffffff';
+            }, 1000);
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const emptyMsg = document.getElementById('cartEmpty');
+            const checkoutBtn = document.getElementById('checkoutButton');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+                checkoutBtn.classList.add('hidden');
+                return;
+            }
+            
+            emptyMsg.classList.add('hidden');
+            checkoutBtn.classList.remove('hidden');
+            
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div class="cart-item-image">${item.images[0]}</div>
+                    <div class="cart-item-content">
+                        <div style="font-size: 1rem; font-weight: bold; margin-bottom: 0.3rem;">${item.name}</div>
+                        <div style="font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">₹${item.price.toLocaleString()}</div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <span style="font-weight: bold; min-width: 25px; text-align: center; font-size: 0.9rem;">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            <button class="btn btn-secondary" style="padding: 0.4rem 0.6rem; font-size: 0.75rem; width: auto; margin-left: 0.5rem; margin-bottom: 0;" onclick="removeFromCart(${item.id})">REMOVE</button>
+                        </div>
+                        <div style="margin-top: 0.4rem; font-size: 0.95rem; color: #cccccc;">Total: ₹${(item.price * item.quantity).toLocaleString()}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== productId);
+                }
+                localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
+                updateCartCount();
+                renderCart();
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const codAdvance = paymentMethod === 'cod' ? 100 : 0;
+            const total = subtotal + codAdvance;
+            
+            document.getElementById('summarySubtotal').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('summaryTotal').textContent = `₹${total.toLocaleString()}`;
+            document.getElementById('codAdvanceRow').style.display = paymentMethod === 'cod' ? 'flex' : 'none';
+            
+            window.orderTotal = total;
+            window.codAdvance = codAdvance;
+            window.isCOD = paymentMethod === 'cod';
+        }
+
+        function confirmOrder() {
+            const form = document.getElementById('checkoutForm');
+            if (!form.checkValidity()) {
+                alert('Please fill all fields correctly');
+                return;
+            }
+            
+            const orderData = {
+                id: 'GOTH' + Date.now(),
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                customerAddress: document.getElementById('customerAddress').value,
+                customerLandmark: document.getElementById('customerLandmark').value,
+                customerPincode: document.getElementById('customerPincode').value,
+                customerDistrict: document.getElementById('customerDistrict').value,
+                customerState: document.getElementById('customerState').value,
+                paymentMethod: document.getElementById('paymentMethod').value,
+                items: cart.map(item => ({name: item.name, quantity: item.quantity, price: item.price, total: item.price * item.quantity})),
+                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                shipping: 0,
+                codAdvance: window.codAdvance,
+                total: window.orderTotal,
+                timestamp: new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'}),
+                status: 'pending'
+            };
+            
+            initiateRazorpay(orderData);
+        }
+
+        function initiateRazorpay(orderData) {
+            const razorpayKeyId = 'rzp_test_Rv6ejgLtSLFFPQ';
+            
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = function() {
+                let paymentAmount = orderData.total * 100;
+                let paymentDescription = '';
+                
+                if (window.isCOD) {
+                    paymentDescription = `COD Advance - Order #${orderData.id}`;
+                    paymentAmount = 100 * 100;
+                } else {
+                    paymentDescription = `Full Payment - Order #${orderData.id}`;
+                }
+                
+                const options = {
+                    key: razorpayKeyId,
+                    amount: paymentAmount,
+                    currency: 'INR',
+                    name: 'GothiCursed',
+                    description: paymentDescription,
+                    handler: function(response) {
+                        fetch('/api/orders', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                orderId: orderData.id,
+                                ...orderData,
+                                paymentId: response.razorpay_payment_id,
+                                status: window.isCOD ? 'cod-advance-paid' : 'paid'
+                            })
+                        }).then(() => {
+                            let detailsHTML = `
+                                <strong>Order ID:</strong> ${orderData.id}<br>
+                                <strong>Customer:</strong> ${orderData.customerName}<br>
+                                <strong>Phone:</strong> ${orderData.customerPhone}<br>
+                                <strong>Address:</strong> ${orderData.customerAddress}, ${orderData.customerLandmark}<br>
+                                <strong>Pincode:</strong> ${orderData.customerPincode}<br>
+                                <strong>District:</strong> ${orderData.customerDistrict}<br>
+                                <strong>State:</strong> ${orderData.customerState}<br><br>
+                                <strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}<br>
+                            `;
+                            
+                            if (window.isCOD) {
+                                detailsHTML += `<strong>✅ COD Advance Paid:</strong> ₹100<br>`;
+                            } else {
+                                detailsHTML += `<strong>✅ Full Payment:</strong> Completed<br>`;
+                            }
+                            
+                            document.getElementById('orderDetails').innerHTML = detailsHTML;
+                            
+                            cart = [];
+                            localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
+                            updateCartCount();
+                            
+                            showPage('orderConfirm');
+                        });
+                    },
+                    prefill: {
+                        name: orderData.customerName,
+                        contact: orderData.customerPhone,
+                        email: orderData.customerEmail
+                    },
+                    theme: {
+                        color: '#ffffff'
+                    }
+                };
+                
+                const rzp = new Razorpay(options);
+                rzp.open();
+            };
+            document.head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
