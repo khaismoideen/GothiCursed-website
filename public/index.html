@@ -579,7 +579,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo gothic-text">🖤 GothiCursed</div>
+            <div class="logo gothic-text"> GothiCursed</div>
             <div class="nav-links">
                 <a class="nav-link" onclick="showPage('home')">Home</a>
                 <a class="nav-link" onclick="showPage('shop')">Shop</a>
@@ -997,64 +997,44 @@
         const products = [
             {
                 id: 1,
-                name: "Obsidian Spike",
-                originalPrice: 6999,
-                price: 4999,
+                name: "cursed minimal",
+                originalPrice: 3999,
+                price: 999,
                 discount: 28,
-                shortDesc: "Black steel with premium spikes",
-                fullDesc: "Forged from premium stainless steel with hand-soldered spikes. Matte black PVD coating. Japanese movement. Water resistant 5ATM.",
-                images: ["🖤⌚", "🔥⌚", "⚡⌚", "💀⌚"]
+                shortDesc: "minimal gothicursed watch",
+                fullDesc: "Forged from premium stainless steel. Japanese movement. Water resistant 5ATM.",
+                images: ["https://i.ibb.co/Wvh9mL6W/cursed-minimal-1.jpg",
+                         "https://i.ibb.co/cSJm6SDH/cursed-minimal-2.jpg",
+                             "https://i.ibb.co/3Y0Nzrh5/cursed-minimal-3.jpg",
+                             ]
             },
             {
                 id: 2,
-                name: "Midnight Reaper",
-                originalPrice: 7999,
-                price: 5999,
+                name: "cursed spike",
+                originalPrice: 4999,
+                price: 1250,
                 discount: 25,
                 shortDesc: "Skeleton design with spikes",
                 fullDesc: "Exposed skeleton movement. Triple-layered spikes with death motif. Black ceramic bezel. Glow-in-dark markers.",
-                images: ["⚰️⌚", "🖤⌚", "💀⌚", "🌙⌚"]
+                images: ["https://i.ibb.co/Rkz9P9c7/cursed-spikes-1.jpg",
+                         "https://i.ibb.co/cKGnQVX3/cursed-spikes-2.jpg",
+                         "https://i.ibb.co/0ppxnXJq/cursed-spike-3.jpg",
+                         "https://i.ibb.co/m7SVHXq/cursed-spike-4.jpg"]
             },
             {
                 id: 3,
-                name: "Gothic Crown",
-                originalPrice: 8999,
-                price: 6499,
-                discount: 27,
-                shortDesc: "Crown spike design",
-                fullDesc: "Luxury design with crown spikes. Sapphire crystal glass. Chronograph function. Italian leather strap.",
-                images: ["👑⌚", "🖤⌚", "💎⌚", "🔥⌚"]
-            },
-            {
-                id: 4,
-                name: "Raven's Eye",
+                name: "cursed venom",
                 originalPrice: 5999,
-                price: 4499,
-                discount: 25,
-                shortDesc: "Minimalist eye detail",
-                fullDesc: "Subtle gothic elegance with raven eye centerpiece. Single row spikes on bezel. Ultra-light titanium case.",
-                images: ["👁️⌚", "🖤⌚", "🌙⌚", "⚡⌚"]
-            },
-            {
-                id: 5,
-                name: "Death Metal",
-                originalPrice: 10999,
-                price: 7999,
+                price: 1499,
                 discount: 27,
-                shortDesc: "Heavy metal chain strap",
-                fullDesc: "Industrial-grade stainless steel with chain-link strap. Multi-layered spikes. Skeleton dial with death scythe hands.",
-                images: ["💀⌚", "🔗⌚", "⚰️⌚", "🔥⌚"]
+                shortDesc: "venom style spikes",
+                fullDesc: "Luxury design with crown spikes. Sapphire crystal glass. Chronograph function. stainless steel.",
+                images: ["https://i.ibb.co/ds4rcpDM/cursed-venom-1.jpg",
+                         "https://i.ibb.co/0jGfjjg2/cursed-venom-2.jpg",
+                         "https://i.ibb.co/YFc3JQQG/cursed-venom-3",
+                         "https://i.ibb.co/rKcBptV3/cursed-venom-4"]
             },
-            {
-                id: 6,
-                name: "Shadow Punk",
-                originalPrice: 7499,
-                price: 5499,
-                discount: 26,
-                shortDesc: "Punk-goth fusion",
-                fullDesc: "Street punk meets gothic elegance. Customizable spike patterns. Canvas strap with metal rivets. Glow hands.",
-                images: ["🔗⌚", "🖤⌚", "⚡⌚", "💥⌚"]
-            }
+           
         ];
 
         let cart = JSON.parse(localStorage.getItem('gothicursed_cart')) || [];
@@ -1086,53 +1066,60 @@
             document.getElementById('allProducts').innerHTML = products.map(p => createProductCard(p)).join('');
         }
 
-        function createProductCard(product) {
-            return `
-                <div class="product-card" onclick="showProductDetail(${product.id})">
-                    <div class="product-image">${product.images[0]}</div>
-                    <div class="product-info">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-price">₹${product.price.toLocaleString()}</div>
-                        <div class="product-description">${product.shortDesc}</div>
-                    </div>
-                </div>
+function createProductCard(product) {
+    return `
+        <div class="product-card" onclick="showProductDetail(${product.id})">
+            <div class="product-image">
+                <img src="${product.images[0]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="product-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">₹${product.price.toLocaleString()}</div>
+                <div class="product-description">${product.shortDesc}</div>
+            </div>
+        </div>
             `;
         }
 
-        function showProductDetail(productId) {
-            const product = products.find(p => p.id === productId);
-            currentProductId = productId;
-            
-            document.getElementById('productDetailContent').innerHTML = `
-                <div class="gallery">
-                    <div class="main-image" id="mainProductImage">${product.images[0]}</div>
-                    <div class="thumbnail-gallery">
-                        ${product.images.map((img, index) => 
-                            `<div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage(${index})">${img}</div>`
-                        ).join('')}
-                    </div>
-                </div>
-                <div class="detail-info">
-                    <div class="detail-name">${product.name}</div>
-                    <div class="price-section">
-                        <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
-                        <span class="discounted-price">₹${product.price.toLocaleString()}</span>
-                        <span class="discount-badge">${product.discount}% OFF</span>
-                    </div>
-                    <div class="detail-description">${product.fullDesc}</div>
-                    <button class="btn btn-primary" onclick="addToCart(${product.id})" id="addToCartBtn">ADD TO CART</button>
-                    <button class="btn btn-secondary" onclick="showPage('cart')">VIEW CART</button>
-                </div>
-            `;
-            showPage('productDetail');
+function showProductDetail(productId) {
+    const product = products.find(p => p.id === productId);
+    currentProductId = productId;
+    
+    document.getElementById('productDetailContent').innerHTML = `
+        <div class="gallery">
+            <div class="main-image" id="mainProductImage">
+                <img src="${product.images[0]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div class="thumbnail-gallery">
+                ${product.images.map((img, index) => 
+                    `<div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage(${index})">
+                        <img src="${img}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">
+                    </div>`
+                ).join('')}
+            </div>
+        </div>
+        <div class="detail-info">
+            <div class="detail-name">${product.name}</div>
+            <div class="price-section">
+                <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                <span class="discounted-price">₹${product.price.toLocaleString()}</span>
+                <span class="discount-badge">${product.discount}% OFF</span>
+            </div>
+            <div class="detail-description">${product.fullDesc}</div>
+            <button class="btn btn-primary" onclick="addToCart(${product.id})" id="addToCartBtn">ADD TO CART</button>
+            <button class="btn btn-secondary" onclick="showPage('cart')">VIEW CART</button>
+        </div>
+    `;
+    showPage('productDetail');
         }
 
-        function changeMainImage(index) {
-            const product = products.find(p => p.id === currentProductId);
-            document.getElementById('mainProductImage').textContent = product.images[index];
-            
-            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === index);
+      function changeMainImage(index) {
+    const product = products.find(p => p.id === currentProductId);
+    document.getElementById('mainProductImage').innerHTML = 
+        `<img src="${product.images[index]}" alt="${product.name}" style="width:100%; height:100%; object-fit:cover;">`;
+    
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
             });
         }
 
