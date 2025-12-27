@@ -323,58 +323,43 @@
             margin-bottom: 1rem;
             opacity: 0.9;
         }
-        .about-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-        .tab-btn {
-            padding: 0.8rem 1.5rem;
-            background: transparent;
-            border: 2px solid #ffffff;
-            color: #ffffff;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-        .tab-btn.active {
-            background: #ffffff;
-            color: #000000;
-        }
-        .tab-btn:hover {
-            background: #ffffff;
-            color: #000000;
-        }
-        .tab-content {
-            display: none;
+        .policy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
             background: #111111;
             border: 2px solid #333333;
-            padding: 2rem;
-            margin-top: 2rem;
             border-radius: 8px;
-            text-align: left;
         }
-        .tab-content.active {
-            display: block;
-        }
-        .tab-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+        .policy-content h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
             text-align: center;
         }
-        .tab-content ul {
+        .policy-section {
+            margin-bottom: 1.5rem;
+        }
+        .policy-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        .policy-section p {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .policy-section ul {
             list-style: none;
             padding: 0;
         }
-        .tab-content li {
-            margin-bottom: 0.8rem;
+        .policy-section li {
+            margin-bottom: 0.7rem;
             padding-left: 1.5rem;
             position: relative;
+            font-size: 0.95rem;
         }
-        .tab-content li:before {
+        .policy-section li:before {
             content: "✓";
             position: absolute;
             left: 0;
@@ -472,12 +457,8 @@
             .cart-item {
                 flex-wrap: wrap;
             }
-            .about-tabs {
-                gap: 0.5rem;
-            }
-            .tab-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
+            .policy-content {
+                padding: 1.5rem;
             }
         }
         @media (max-width: 480px) {
@@ -572,15 +553,14 @@
             .summary-row {
                 font-size: 0.9rem;
             }
-            .about-tabs {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .tab-btn {
-                width: 100%;
-            }
-            .tab-content {
+            .policy-content {
                 padding: 1rem;
+            }
+            .policy-content h2 {
+                font-size: 1.5rem;
+            }
+            .policy-section h3 {
+                font-size: 1rem;
             }
         }
         .hidden {
@@ -604,6 +584,7 @@
                 <a class="nav-link" onclick="showPage('home')">Home</a>
                 <a class="nav-link" onclick="showPage('shop')">Shop</a>
                 <a class="nav-link" onclick="showPage('about')">About</a>
+                <a class="nav-link" onclick="showPage('terms')">Legal</a>
                 <div class="cart-icon" onclick="showPage('cart')">
                     🛒 <span class="cart-count" id="cartCount">0</span>
                 </div>
@@ -644,66 +625,261 @@
                     <p>Handcrafted spike watches from India. Every piece is soldered with precision and gothic soul.</p>
                     <p>Our watches are more than timepieces - they're statements of darkness and rebellion.</p>
                     <p>✓ Premium stainless steel | ✓ Hand-soldered spikes | ✓ FREE Shipping</p>
-                    
-                    <div class="about-tabs">
-                        <button class="tab-btn active" onclick="switchTab('about-us')">About Us</button>
-                        <button class="tab-btn" onclick="switchTab('contact')">Contact</button>
-                        <button class="tab-btn" onclick="switchTab('shipping')">Shipping</button>
-                        <button class="tab-btn" onclick="switchTab('terms')">Terms</button>
-                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <div id="about-us" class="tab-content active">
-                        <h3>About GothiCursed</h3>
-                        <p style="text-align: center; margin-bottom: 1.5rem;">Handcrafted spike watches from Kochi, Kerala, India. Every piece is soldered with precision and gothic soul. Our mission is to bring dark elegance to your wrist.</p>
+        <div id="terms" class="page hidden">
+            <div class="container">
+                <div class="policy-content">
+                    <h2 class="gothic-text">📋 TERMS & CONDITIONS</h2>
+                    <div class="policy-section">
+                        <h3>Pricing & Taxes</h3>
+                        <p>All prices displayed are inclusive of all applicable taxes (GST/VAT). No additional taxes will be charged at checkout.</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Payment Methods</h3>
                         <ul>
-                            <li>Premium stainless steel construction</li>
-                            <li>Hand-soldered spikes with perfection</li>
-                            <li>Japanese quartz movement</li>
-                            <li>Water resistant (5ATM)</li>
-                            <li>6 months manufacturing warranty</li>
-                            <li>FREE shipping all over India</li>
+                            <li><strong>Razorpay:</strong> Full payment required upfront via credit card, debit card, or UPI</li>
+                            <li><strong>Cash on Delivery (COD):</strong> ₹100 advance payment required at order placement</li>
+                            <li>Balance amount payable upon delivery for COD orders</li>
                         </ul>
                     </div>
-
-                    <div id="contact" class="tab-content hidden">
-                        <h3>📞 Contact Us</h3>
+                    <div class="policy-section">
+                        <h3>Product Warranty</h3>
                         <ul>
-                            <li><strong>WhatsApp:</strong> 91+ 98765 43210 (24/7 support)</li>
-                            <li><strong>Instagram:</strong> @gothicursed (DM for custom orders)</li>
-                            <li><strong>Email:</strong> hello@gothicursed.com</li>
-                            <li><strong>Location:</strong> Kochi, Kerala, India</li>
-                            <li><strong>Business Hours:</strong> WhatsApp 24/7 | Instagram 10AM-10PM</li>
-                        </ul>
-                        <p style="text-align: center; margin-top: 1.5rem;"><strong>Message us for custom spike designs!</strong></p>
-                    </div>
-
-                    <div id="shipping" class="tab-content hidden">
-                        <h3>🚚 Shipping Policy</h3>
-                        <ul>
-                            <li><strong>Shipping Cost:</strong> FREE all over India</li>
-                            <li><strong>Delivery Time:</strong> 3-7 business days</li>
-                            <li><strong>Metro Cities:</strong> 3-5 days</li>
-                            <li><strong>Other Cities:</strong> 5-7 days</li>
-                            <li><strong>Remote Areas:</strong> 7-10 days</li>
-                            <li><strong>Processing:</strong> 24 hours</li>
-                            <li><strong>Tracking:</strong> DTDC / Delhivery with WhatsApp updates</li>
-                            <li><strong>Packaging:</strong> Bubble wrap + Box (spike-safe)</li>
-                            <li><strong>Guarantee:</strong> 100% damage-free delivery</li>
+                            <li>6 months manufacturing warranty on all watches</li>
+                            <li>Water resistant up to 5ATM (splash-proof, not waterproof)</li>
+                            <li>Free servicing within 30 days of purchase</li>
+                            <li>Does not cover water damage or physical damage from drops</li>
                         </ul>
                     </div>
-
-                    <div id="terms" class="tab-content hidden">
-                        <h3>📋 Terms & Conditions</h3>
+                    <div class="policy-section">
+                        <h3>Order Acceptance</h3>
                         <ul>
-                            <li><strong>Pricing:</strong> All prices inclusive of taxes</li>
-                            <li><strong>Razorpay:</strong> Full payment required upfront</li>
-                            <li><strong>COD:</strong> ₹100 advance + Balance on delivery</li>
-                            <li><strong>Warranty:</strong> 6 months manufacturing warranty</li>
-                            <li><strong>Water Resistance:</strong> 5ATM (splash proof, not waterproof)</li>
-                            <li><strong>Free Servicing:</strong> Within 30 days of purchase</li>
-                            <li><strong>Cancellation:</strong> Free before shipping, no refund after</li>
-                            <li><strong>Returns:</strong> No returns on custom spike watches</li>
-                            <li><strong>Delivery:</strong> Someone must be available to receive</li>
+                            <li>We reserve the right to accept or decline any order</li>
+                            <li>Orders are subject to availability of stock</li>
+                            <li>Confirmation email will be sent within 24 hours</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Intellectual Property</h3>
+                        <p>All designs, logos, and branding of GothiCursed are proprietary. Unauthorized reproduction is prohibited.</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Liability Limitation</h3>
+                        <p>GothiCursed shall not be liable for any indirect, incidental, or consequential damages arising from the use of products or website.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="privacy" class="page hidden">
+            <div class="container">
+                <div class="policy-content">
+                    <h2 class="gothic-text">🔒 PRIVACY POLICY</h2>
+                    <div class="policy-section">
+                        <h3>Information We Collect</h3>
+                        <ul>
+                            <li>Full name and contact details (email, phone)</li>
+                            <li>Shipping address and billing information</li>
+                            <li>Payment information (processed via Razorpay)</li>
+                            <li>Browser and device information</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>How We Use Your Information</h3>
+                        <ul>
+                            <li>Process and fulfill your orders</li>
+                            <li>Send order confirmations and shipping updates</li>
+                            <li>Improve website functionality and user experience</li>
+                            <li>Customer support and communications</li>
+                            <li>Comply with legal obligations</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Data Security</h3>
+                        <p>We implement industry-standard security measures to protect your personal information. Payment processing is secured through Razorpay's encrypted channels.</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Third-Party Services</h3>
+                        <ul>
+                            <li>Payment processing: Razorpay</li>
+                            <li>Shipping carriers: DTDC, Delhivery</li>
+                            <li>These services have their own privacy policies</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Cookies & Tracking</h3>
+                        <p>We use cookies to enhance your browsing experience and track website performance. You can disable cookies in your browser settings.</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Your Rights</h3>
+                        <ul>
+                            <li>Access your personal data anytime</li>
+                            <li>Request data deletion (subject to legal retention requirements)</li>
+                            <li>Opt-out of marketing communications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="shipping" class="page hidden">
+            <div class="container">
+                <div class="policy-content">
+                    <h2 class="gothic-text">🚚 SHIPPING POLICY</h2>
+                    <div class="policy-section">
+                        <h3>Free Shipping Coverage</h3>
+                        <ul>
+                            <li>Free shipping available across entire India</li>
+                            <li>No minimum order value required</li>
+                            <li>Applies to all products in our catalog</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Delivery Timeline</h3>
+                        <ul>
+                            <li><strong>Order Processing:</strong> 24 hours</li>
+                            <li><strong>Metro Cities (Delhi, Mumbai, Bangalore, Chennai):</strong> 3-5 business days</li>
+                            <li><strong>Other Cities:</strong> 5-7 business days</li>
+                            <li><strong>Remote/Rural Areas:</strong> 7-10 business days</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Shipping Partners</h3>
+                        <ul>
+                            <li>DTDC Courier</li>
+                            <li>Delhivery</li>
+                            <li>Tracking number sent via WhatsApp and email</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Packaging & Safety</h3>
+                        <ul>
+                            <li>Watches packed with bubble wrap protection</li>
+                            <li>Sturdy box to prevent damage during transit</li>
+                            <li>Spikes are safely secured to prevent movement</li>
+                            <li>100% damage-free delivery guarantee</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Delivery Requirements</h3>
+                        <ul>
+                            <li>Someone must be available at delivery address</li>
+                            <li>Verify package condition before accepting</li>
+                            <li>Report any damage immediately</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Lost or Damaged Shipments</h3>
+                        <ul>
+                            <li>Report issues within 24 hours of delivery</li>
+                            <li>Provide tracking number and photos as evidence</li>
+                            <li>Replacement or refund will be processed</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="page hidden">
+            <div class="container">
+                <div class="policy-content">
+                    <h2 class="gothic-text">📞 CONTACT US</h2>
+                    <div class="policy-section">
+                        <h3>WhatsApp (Preferred)</h3>
+                        <p><strong>+91 98765 43210</strong></p>
+                        <p>Available 24/7 for orders, queries, and support</p>
+                        <p style="margin-top: 1rem;">Quick response time: Usually within 5 minutes</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Instagram</h3>
+                        <p><strong>@gothicursed</strong></p>
+                        <ul>
+                            <li>DM for custom spike designs</li>
+                            <li>Follow for new launches and updates</li>
+                            <li>Response time: 10AM-10PM IST</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Email</h3>
+                        <p><strong>hello@gothicursed.com</strong></p>
+                        <p>For business inquiries and bulk orders</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Location</h3>
+                        <p><strong>Kochi, Kerala, India</strong></p>
+                        <p>All watches handcrafted and shipped from our workshop</p>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Business Hours</h3>
+                        <ul>
+                            <li><strong>WhatsApp:</strong> 24/7 (instant support)</li>
+                            <li><strong>Instagram DM:</strong> 10AM - 10PM IST</li>
+                            <li><strong>Shipping/Orders:</strong> Monday - Saturday</li>
+                            <li>Closed on Sundays and public holidays</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="refund" class="page hidden">
+            <div class="container">
+                <div class="policy-content">
+                    <h2 class="gothic-text">↩️ CANCELLATION & REFUNDS</h2>
+                    <div class="policy-section">
+                        <h3>Cancellation Policy</h3>
+                        <ul>
+                            <li><strong>Before Shipping:</strong> Free cancellation with full refund</li>
+                            <li><strong>After Shipping:</strong> No cancellation allowed</li>
+                            <li>Request cancellation within 24 hours of order placement</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Refund Process</h3>
+                        <ul>
+                            <li>Approved cancellations processed within 2-3 business days</li>
+                            <li>Refund credited back to original payment method</li>
+                            <li>Bank processing may take 2-5 additional days</li>
+                            <li>No refund charges or deductions</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Return Policy</h3>
+                        <ul>
+                            <li><strong>Custom Spike Watches:</strong> No returns accepted</li>
+                            <li><strong>Damaged/Defective Items:</strong> Return & replacement within 7 days</li>
+                            <li>Provide unboxing video as proof</li>
+                            <li>Free return shipping for defective items</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>Damaged Product Claims</h3>
+                        <ul>
+                            <li>Report damage within 24 hours of delivery</li>
+                            <li>Provide clear photos of damage</li>
+                            <li>Include original tracking number</li>
+                            <li>We will offer replacement or refund</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>COD Advance Non-Refundable Cases</h3>
+                        <ul>
+                            <li>Order refused at delivery address</li>
+                            <li>Customer unavailable for 3 delivery attempts</li>
+                            <li>Return shipping charges apply in such cases</li>
+                        </ul>
+                    </div>
+                    <div class="policy-section">
+                        <h3>How to Request Cancellation/Refund</h3>
+                        <p>WhatsApp: +91 98765 43210 with Order ID and reason</p>
+                        <p style="margin-top: 0.8rem;">Include:</p>
+                        <ul>
+                            <li>Order ID (provided in confirmation email)</li>
+                            <li>Reason for cancellation</li>
+                            <li>Photos (if applicable)</li>
                         </ul>
                     </div>
                 </div>
@@ -809,8 +985,11 @@
         <p class="gothic-text">&copy; 2025 GothiCursed. All rights reserved.</p>
         <p>Instagram: <strong>@gothicursed</strong> | FREE Shipping all over India</p>
         <p style="margin-top: 1rem; font-size: 0.8rem;">
-            <a href="#" onclick="showPage('about')" style="color: #cccccc; margin-right: 1rem;">Policies</a> | 
-            <a href="#" onclick="showPage('about')" style="color: #cccccc;">Contact</a>
+            <a href="#" onclick="showPage('terms')" style="color: #cccccc; margin-right: 1rem;">Terms</a> | 
+            <a href="#" onclick="showPage('privacy')" style="color: #cccccc; margin-right: 1rem;">Privacy</a> | 
+            <a href="#" onclick="showPage('shipping')" style="color: #cccccc; margin-right: 1rem;">Shipping</a> | 
+            <a href="#" onclick="showPage('contact')" style="color: #cccccc; margin-right: 1rem;">Contact</a> | 
+            <a href="#" onclick="showPage('refund')" style="color: #cccccc;">Refunds</a>
         </p>
     </footer>
 
@@ -896,14 +1075,6 @@
             if (pageId === 'cart') renderCart();
             if (pageId === 'checkout') updateSummary();
             if (pageId === 'home') renderFeaturedProducts();
-        }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
         }
 
         function renderFeaturedProducts() {
