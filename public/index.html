@@ -1258,32 +1258,90 @@
             window.isCOD = paymentMethod === 'cod';
         }
 
-        function confirmOrder() {
-            const form = document.getElementById('checkoutForm');
-            if (!form.checkValidity()) {
-                alert('Please fill all fields correctly');
-                return;
-            }
-            
-            const orderData = {
-                id: 'GOTH' + Date.now(),
-                customerName: document.getElementById('customerName').value,
-                customerEmail: document.getElementById('customerEmail').value,
-                customerPhone: document.getElementById('customerPhone').value,
-                customerAddress: document.getElementById('customerAddress').value,
-                customerLandmark: document.getElementById('customerLandmark').value,
-                customerPincode: document.getElementById('customerPincode').value,
-                customerDistrict: document.getElementById('customerDistrict').value,
-                customerState: document.getElementById('customerState').value,
-                paymentMethod: document.getElementById('paymentMethod').value,
-                items: cart.map(item => ({name: item.name, quantity: item.quantity, price: item.price, total: item.price * item.quantity})),
-                subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-                shipping: 0,
-                codAdvance: window.codAdvance,
-                total: window.orderTotal,
-                timestamp: new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'}),
-                status: 'pending'
-            };
+ function confirmOrder() {
+    const form = document.getElementById('checkoutForm');
+    if (!form.checkValidity()) {
+        alert('Please fill all fields correctly');
+        return;
+    }
+    
+    const orderData = {
+        id: 'GOTH' + Date.now(),
+        customerName: document.getElementById('customerName').value,
+        customerEmail: document.getElementById('customerEmail').value,
+        customerPhone: document.getElementById('customerPhone').value,
+        customerAddress: document.getElementById('customerAddress').value,
+        customerLandmark: document.getElementById('customerLandmark').value,
+        customerPincode: document.getElementById('customerPincode').value,
+        customerDistrict: document.getElementById('customerDistrict').value,
+        customerState: document.getElementById('customerState').value,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        items: cart.map(item => ({name: item.name, quantity: item.quantity, price: item.price})),
+        subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+        total: window.orderTotal,
+        timestamp: new Date().toLocaleString('en-IN', {timeZone: 'Asia/Kolkata'})
+    };
+    
+    // 🚀 SAVE EVERYTHING INSTANTLY
+    saveToGoogleSheets(orderData);
+    sendWhatsAppOrder(orderData);
+    
+    initiateRazorpay(orderData);
+}
+
+function saveToGoogleSheets(orderData) {
+// In your HTML - UPDATE formData keys to match:
+const formData = {
+  'Order ID': orderData.id,
+  'Name': orderData.customerName,
+  'Email': orderData.customerEmail,      // Capital E
+  'Phone': orderData.customerPhone,      // Capital P
+  'Address': orderData.customerAddress,
+  'Landmark': orderData.customerLandmark,
+  'Pincode': orderData.customerPincode,
+  'District': orderData.customerDistrict,
+  'State': orderData.customerState,
+  'Products': orderData.items.map(i => `${i.name} x${i.quantity}`).join('\n'),
+  'Total Items': orderData.items.length,
+  'Subtotal': `₹${orderData.subtotal}`,
+  'Total Amount': `₹${orderData.total}`,
+  'Payment Method': orderData.paymentMethod,
+  'Order Date': orderData.timestamp
+};
+
+    
+    // Replace with your Apps Script URL
+    fetch('https://script.google.com/macros/s/19lKmtGtfIqfmgsH1ZU-l3F6hrCec5h5_Izx0xT8Y3iU/exec', {
+        method: 'POST',
+        body: new URLSearchParams(formData)
+    });
+}
+
+function sendWhatsAppOrder(orderData) {
+    let message = `🛒 *NEW ORDER #${orderData.id}*\n\n`;
+    message += `👤 *${orderData.customerName}*\n`;
+    message += `📧 ${orderData.customerEmail}\n`;
+    message += `📱 ${orderData.customerPhone}\n\n`;
+    
+    message += `📍 *ADDRESS:*\n`;
+    message += `${orderData.customerAddress}\n`;
+    message += `Near: ${orderData.customerLandmark}\n`;
+    message += `${orderData.customerPincode}, ${orderData.customerDistrict}, ${orderData.customerState}\n\n`;
+    
+    message += `🧺 *PRODUCTS:*\n`;
+    orderData.items.forEach(item => {
+        message += `• ${item.name} x${item.quantity} = ₹${item.price * item.quantity}\n`;
+    });
+    
+    message += `\n💰 *Subtotal:* ₹${orderData.subtotal}\n`;
+    message += `💳 *Payment:* ${orderData.paymentMethod}\n`;
+    message += `*Total:* ₹${orderData.total}\n\n`;
+    message += `⏰ *${orderData.timestamp}*`;
+    
+    window.open(`https://wa.me/918089369916?text=${encodeURIComponent(message)}`);
+}
+
+
             
             initiateRazorpay(orderData);
         }
