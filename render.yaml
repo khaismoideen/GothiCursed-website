@@ -1,8 +1,10 @@
 services:
-- type web
-name: gothicursed
-env: static
-repo: https://github.com/klaimrender/gothicursed
-branch: main
-buildcommand: ""
-publishDir: /
+  - type: web
+    name: gothicursed
+    env: static
+    plan: free
+    buildCommand: echo "Static site - no build required"
+    publish: /static
+    gitBranch: main
+    autoDeploy: true
+
