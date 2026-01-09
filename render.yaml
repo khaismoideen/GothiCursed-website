@@ -1,8 +1,2 @@
-services:
-  - type: web
-    name: gothicursed
-    env: static
-    plan: free
-    region: singapore
-    buildCommand: echo "No build needed"
+
 
