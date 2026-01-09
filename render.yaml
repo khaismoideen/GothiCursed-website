@@ -3,8 +3,6 @@ services:
     name: gothicursed
     env: static
     plan: free
-    buildCommand: echo "Static site - no build required"
-    publish: /static
-    gitBranch: main
-    autoDeploy: true
+    region: singapore
+    buildCommand: echo "No build needed"
 
