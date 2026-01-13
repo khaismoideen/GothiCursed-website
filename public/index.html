@@ -1251,22 +1251,7 @@ function saveOrderLocally(order) {
     // Console log ALL details
     console.log('🛒 NEW ORDER COMPLETE!', order);
     
-    // WhatsApp - CHANGE TO YOUR NUMBER
-    const whatsappMsg = `🛒 NEW ORDER ${order.id}
 
-👤 ${order.customerName}
-📧 ${order.customerEmail}
-📞 ${order.customerPhone}
-📍 ${order.customerAddress}, ${order.customerLandmark}
-📮 ${order.pincode} ${order.customerDistrict}, ${order.customerState}
-🕐 ${order.timestamp}
-
-💰 Subtotal: ₹${order.subtotal.toLocaleString()}
-${order.items.map(i => `${i.name} x${i.quantity} (₹${i.price})`).join('\n')}
-💳 Total: ₹${order.total.toLocaleString()}
-💳 Payment: ${order.paymentMethod}`;
-
-    window.open(`https://wa.me/+918089369916?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
     
     // Google Sheets (OPTIONAL - replace URL)
     fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
