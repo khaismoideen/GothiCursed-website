@@ -1277,31 +1277,50 @@ function saveOrderLocally(order) {
 }
 
 function initiateRazorpay(orderData) {
+  // COD = ₹100 advance, Razorpay = FULL amount
+  const paymentAmount = window.isCOD ? 10000 : Math.round(orderData.total * 100);
+  
+  const options = {
+    key: 'rzplive_RwbkrFXvcKUa63',
+    amount: paymentAmount,
+    currency: 'INR',
+    name: 'GothiCursed',
+    description: `Order #GOTH${orderData.id.slice(-6)} - ${window.isCOD ? 'COD Advance' : 'Full Payment'}`,
+    handler: function(response) {
+      const paidOrder = {...orderData, razorpay_payment_id: response.razorpay_payment_id};
+      saveOrderLocally(paidOrder);
+      
+      document.getElementById('orderDetails').innerHTML = `
+        ✅ <strong>Payment Success!</strong><br>
+        Order: ${paidOrder.id}<br>
+        Amount: ₹${(paymentAmount/100).toLocaleString()}<br>
+        Payment ID: ${response.razorpay_payment_id}<br>
+        ${window.isCOD ? 'Balance on delivery!' : 'Order processing...'}
+      `;
+      showPage('orderConfirm');
+      cart = [];
+      localStorage.setItem('gothicursedcart', JSON.stringify(cart));
+      updateCartCount();
+    },
+    prefill: {
+      name: orderData.customerName,
+      contact: orderData.customerPhone,
+      email: orderData.customerEmail
+    },
+    theme: { color: '#ffffff' },
+    modal: { ondismiss: () => alert('Payment cancelled') }
+  };
+  
+  // Load Razorpay + Open (100% working)
   const script = document.createElement('script');
   script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-  script.onload = function() {
-    const options = {
-      key: 'rzplive_RwbkrFXvcKUa63',
-      amount: Math.round(orderData.total * 100),
-      currency: 'INR',
-      name: 'GothiCursed',
-      description: `Order #GOTH${Date.now()}`,
-      handler: function(response) {
-        const paidOrder = {...orderData, razorpay_payment_id: response.razorpay_payment_id};
-        saveOrderLocally(paidOrder);
-        document.getElementById('orderDetails').innerHTML = `
-          ✅ Payment Success!<br>Order: ${paidOrder.id}<br>Total: ₹${paidOrder.total}<br>ID: ${response.razorpay_payment_id}
-        `;
-        showPage('orderConfirm');
-      },
-      prefill: {name: orderData.customerName, contact: orderData.customerPhone},
-      theme: {color: '#ffffff'}
-    };
+  script.onload = () => {
     const rzp = new Razorpay(options);
     rzp.open();
   };
   document.head.appendChild(script);
 }
+
 
 
 // 🔥 ADMIN FUNCTIONS - Open F12 Console
