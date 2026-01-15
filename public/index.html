@@ -1313,7 +1313,29 @@ function createProductCard(product) {
                     currency: 'INR',
                     name: 'GothiCursed',
                     description: paymentDescription,
-                    handler: function(response) {
+                    handler:handler: function(response) {
+
+    // ✅ GOOGLE SHEETS
+    fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams({
+            'Order ID': orderData.id,
+            'Name': orderData.customerName,
+            'Email': orderData.customerEmail,
+            'Phone': orderData.customerPhone,
+            'Address': orderData.customerAddress,
+            'Landmark': orderData.customerLandmark,
+            'Pincode': orderData.customerPincode,
+            'District': orderData.customerDistrict,
+            'State': orderData.customerState,
+            'Products': orderData.items.map(i => `${i.name} x${i.quantity}`).join(', '),
+            'Subtotal': orderData.subtotal,
+            'Total': orderData.total,
+            'Payment': orderData.paymentMethod,
+            'Timestamp': orderData.timestamp
+        })
+    }).catch(() => console.log('Sheets optional'));
                         fetch('/api/orders', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
