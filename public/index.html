@@ -1313,7 +1313,7 @@ function createProductCard(product) {
                     currency: 'INR',
                     name: 'GothiCursed',
                     description: paymentDescription,
-                    handler:handler: function(response) {
+                handler: function(response) {
 
     // ✅ GOOGLE SHEETS
     fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
@@ -1336,16 +1336,23 @@ function createProductCard(product) {
             'Timestamp': orderData.timestamp
         })
     }).catch(() => console.log('Sheets optional'));
-                        fetch('/api/orders', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                orderId: orderData.id,
-                                ...orderData,
-                                paymentId: response.razorpay_payment_id,
-                                status: window.isCOD ? 'cod-advance-paid' : 'paid'
-                            })
-                        }).then(() => {
+
+    // ✅ YOUR EXISTING BACKEND SAVE
+    fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            orderId: orderData.id,
+            ...orderData,
+            paymentId: response.razorpay_payment_id,
+            status: window.isCOD ? 'cod-advance-paid' : 'paid'
+        })
+    }).then(() => {
+        // existing UI logic stays here
+    });
+
+},
+.then(() => {
                             let detailsHTML = `
                                 <strong>Order ID:</strong> ${orderData.id}<br>
                                 <strong>Customer:</strong> ${orderData.customerName}<br>
