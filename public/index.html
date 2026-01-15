@@ -1365,26 +1365,7 @@ function createProductCard(product) {
             };
             document.head.appendChild(script);
         }
-        fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        body: new URLSearchParams({
-            'Order ID': order.id,
-            'Name': order.customerName,
-            'Email': order.customerEmail,
-            'Phone': order.customerPhone,
-            'Address': order.customerAddress,
-            'Landmark': order.customerLandmark,
-            'Pincode': order.customerPincode,
-            'District': order.customerDistrict,
-            'State': order.customerState,
-            'Products': order.items.map(i => `${i.name} x${i.quantity}`).join(', '),
-            'Subtotal': order.subtotal,
-            'Total': order.total,
-            'Payment': order.paymentMethod,
-            'Timestamp': order.timestamp
-        })
-    }).catch(() => console.log('Sheets optional'));
+
 }
     </script>
 </body>
