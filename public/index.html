@@ -1277,7 +1277,6 @@ function saveOrderLocally(order) {
 }
 
 function initiateRazorpay(orderData) {
-  // COD = ₹100 advance, Razorpay = FULL amount
   const paymentAmount = window.isCOD ? 10000 : Math.round(orderData.total * 100);
   
   const options = {
@@ -1285,7 +1284,7 @@ function initiateRazorpay(orderData) {
     amount: paymentAmount,
     currency: 'INR',
     name: 'GothiCursed',
-    description: `Order #GOTH${orderData.id.slice(-6)} - ${window.isCOD ? 'COD Advance' : 'Full Payment'}`,
+    description: `Order #GOTH${orderData.id.slice(-6)}`,
     handler: function(response) {
       const paidOrder = {...orderData, razorpay_payment_id: response.razorpay_payment_id};
       saveOrderLocally(paidOrder);
@@ -1294,8 +1293,7 @@ function initiateRazorpay(orderData) {
         ✅ <strong>Payment Success!</strong><br>
         Order: ${paidOrder.id}<br>
         Amount: ₹${(paymentAmount/100).toLocaleString()}<br>
-        Payment ID: ${response.razorpay_payment_id}<br>
-        ${window.isCOD ? 'Balance on delivery!' : 'Order processing...'}
+        Payment ID: ${response.razorpay_payment_id}
       `;
       showPage('orderConfirm');
       cart = [];
@@ -1307,18 +1305,22 @@ function initiateRazorpay(orderData) {
       contact: orderData.customerPhone,
       email: orderData.customerEmail
     },
-    theme: { color: '#ffffff' },
-    modal: { ondismiss: () => alert('Payment cancelled') }
+    theme: { color: '#ffffff' }
   };
   
-  // Load Razorpay + Open (100% working)
-  const script = document.createElement('script');
-  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-  script.onload = () => {
+  // CRITICAL FIX: Check if Razorpay loaded, else load fresh
+  if (typeof Razorpay !== 'undefined') {
     const rzp = new Razorpay(options);
     rzp.open();
-  };
-  document.head.appendChild(script);
+  } else {
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => {
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+    document.head.appendChild(script);
+  }
 }
 
 
