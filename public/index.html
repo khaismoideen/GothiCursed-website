@@ -1277,56 +1277,32 @@ function saveOrderLocally(order) {
 }
 
 function initiateRazorpay(orderData) {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.onload = function() {
-        let paymentAmount = orderData.total * 100;
-        let paymentDescription = window.isCOD ? 
-            `COD Advance - Order ${orderData.id}` : 
-            `Full Payment - Order ${orderData.id}`;
-            
-        const options = {
-            key: 'rzpliveRwbkrFXvcKUa63', // Your Razorpay key
-            amount: paymentAmount,
-            currency: 'INR',
-            name: 'GothiCursed',
-            description: paymentDescription,
-            handler: function(response) {
-                // Update with payment ID
-                const paidOrder = {...orderData, razorpay_payment_id: response.razorpay_payment_id, status: 'paid'};
-                saveOrderLocally(paidOrder);
-                
-                let detailsHTML = `
-                    <strong>✅ Order Confirmed!</strong><br><br>
-                    <strong>Order ID:</strong> ${orderData.id}<br>
-                    <strong>Customer:</strong> ${orderData.customerName}<br>
-                    <strong>Phone:</strong> ${orderData.customerPhone}<br>
-                    <strong>Address:</strong> ${orderData.customerAddress}${orderData.customerLandmark ? ', ' + orderData.customerLandmark : ''}<br>
-                    <strong>Location:</strong> ${orderData.customerPincode}, ${orderData.customerDistrict}, ${orderData.customerState}<br><br>
-                    <strong>Items:</strong><br>${orderData.items.map(i => `• ${i.name} x${i.quantity}`).join('<br>')}<br><br>
-                    <strong>Total: ₹${orderData.total.toLocaleString()}</strong><br>
-                    <strong>Payment ID:</strong> ${response.razorpay_payment_id}<br>
-                    ${window.isCOD ? '<strong>COD: ₹100 advance paid. Balance on delivery.</strong>' : '<strong>Full payment completed!</strong>'}
-                `;
-                
-                document.getElementById('orderDetails').innerHTML = detailsHTML;
-                cart = [];
-                localStorage.setItem('gothicursedcart', JSON.stringify(cart));
-                updateCartCount();
-                showPage('orderConfirm');
-            },
-            prefill: {
-                name: orderData.customerName,
-                contact: orderData.customerPhone,
-                email: orderData.customerEmail
-            },
-            theme: {color: '#ffffff'}
-        };
-        const rzp = new Razorpay(options);
-        rzp.open();
+  const script = document.createElement('script');
+  script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+  script.onload = function() {
+    const options = {
+      key: 'rzplive_RwbkrFXvcKUa63',
+      amount: Math.round(orderData.total * 100),
+      currency: 'INR',
+      name: 'GothiCursed',
+      description: `Order #GOTH${Date.now()}`,
+      handler: function(response) {
+        const paidOrder = {...orderData, razorpay_payment_id: response.razorpay_payment_id};
+        saveOrderLocally(paidOrder);
+        document.getElementById('orderDetails').innerHTML = `
+          ✅ Payment Success!<br>Order: ${paidOrder.id}<br>Total: ₹${paidOrder.total}<br>ID: ${response.razorpay_payment_id}
+        `;
+        showPage('orderConfirm');
+      },
+      prefill: {name: orderData.customerName, contact: orderData.customerPhone},
+      theme: {color: '#ffffff'}
     };
-    document.head.appendChild(script);
+    const rzp = new Razorpay(options);
+    rzp.open();
+  };
+  document.head.appendChild(script);
 }
+
 
 // 🔥 ADMIN FUNCTIONS - Open F12 Console
 window.viewOrders = () => {
