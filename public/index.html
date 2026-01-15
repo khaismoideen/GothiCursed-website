@@ -1347,38 +1347,7 @@ function createProductCard(product) {
             paymentId: response.razorpay_payment_id,
             status: window.isCOD ? 'cod-advance-paid' : 'paid'
         })
-    }).then(() => {
-        // existing UI logic stays here
-    });
-
-},
-.then(() => {
-                            let detailsHTML = `
-                                <strong>Order ID:</strong> ${orderData.id}<br>
-                                <strong>Customer:</strong> ${orderData.customerName}<br>
-                                <strong>Phone:</strong> ${orderData.customerPhone}<br>
-                                <strong>Address:</strong> ${orderData.customerAddress}, ${orderData.customerLandmark}<br>
-                                <strong>Pincode:</strong> ${orderData.customerPincode}<br>
-                                <strong>District:</strong> ${orderData.customerDistrict}<br>
-                                <strong>State:</strong> ${orderData.customerState}<br><br>
-                                <strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}<br>
-                            `;
-                            
-                            if (window.isCOD) {
-                                detailsHTML += `<strong>✅ COD Advance Paid:</strong> ₹100<br>`;
-                            } else {
-                                detailsHTML += `<strong>✅ Full Payment:</strong> Completed<br>`;
-                            }
-                            
-                            document.getElementById('orderDetails').innerHTML = detailsHTML;
-                            
-                            cart = [];
-                            localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
-                            updateCartCount();
-                            
-                            showPage('orderConfirm');
-                        });
-                    },
+    })
                     prefill: {
                         name: orderData.customerName,
                         contact: orderData.customerPhone,
