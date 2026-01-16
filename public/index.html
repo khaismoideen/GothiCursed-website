@@ -595,6 +595,7 @@
             font-size: 0.9rem;
         }
     </style>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 <body>
     <header>
@@ -1292,7 +1293,7 @@
     const paymentAmount = orderData.total * 100; // in paise for Razorpay
 
     const options = {
-        key:rzp_live_RwbkrFXvcKUa63, // your Razorpay Key ID
+        key:"rzp_live_RwbkrFXvcKUa63", // your Razorpay Key ID
         amount: paymentAmount,
         currency: 'INR',
         name: 'GothiCursed',
