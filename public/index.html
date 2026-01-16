@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GothiCursed - Black Spike Watches</title>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <style>
         * {
             margin: 0;
@@ -1292,7 +1293,7 @@
     const paymentAmount = orderData.total * 100; // in paise for Razorpay
 
     const options = {
-        key: razorpayKeyId, // your Razorpay Key ID
+        key:rzp_live_RwbkrFXvcKUa63, // your Razorpay Key ID
         amount: paymentAmount,
         currency: 'INR',
         name: 'GothiCursed',
@@ -1369,8 +1370,7 @@
     rzp.open();
 }
 
-            document.head.appendChild(script);
-        }
+          
     </script>
 </body>
 </html>
