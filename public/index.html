@@ -1080,6 +1080,23 @@
             },
            
         ];
+        // 🌍 Detect user country (safe step)
+let userCountry = 'IN'; // default safe fallback
+let userCurrency = 'INR';
+let exchangeRate = 1;
+
+fetch('https://ipapi.co/json/')
+  .then(res => res.json())
+  .then(data => {
+    userCountry = data.country || 'IN';
+    userCurrency = data.currency || 'INR';
+    console.log('User country:', userCountry);
+    console.log('User currency:', userCurrency);
+  })
+  .catch(() => {
+    console.log('Geo detection failed, using India');
+  });
+
 
         let cart = JSON.parse(localStorage.getItem('gothicursed_cart')) || [];
         let currentProductId = null;
