@@ -1289,73 +1289,55 @@
             initiateRazorpay(orderData);
         }
 
-     function initiateRazorpay(orderData) {
-    const paymentAmount = orderData.total * 100; // in paise for Razorpay
+  function initiateRazorpay(orderData) {
+
+    // ✅ Charge logic
+    const amountToCharge = window.isCOD 
+        ? orderData.codAdvance    // ₹100 for COD
+        : orderData.total;        // full amount for online
 
     const options = {
-        key:"rzp_live_RwbkrFXvcKUa63", // your Razorpay Key ID
-        amount: paymentAmount,
+        key: "rzp_live_RwbkrFXvcKUa63",
+        amount: amountToCharge * 100,
         currency: 'INR',
         name: 'GothiCursed',
-        description: 'Order Payment',
+        description: window.isCOD 
+            ? 'COD Advance Payment'
+            : 'Full Order Payment',
 
         handler: function(response) {
-            console.log('Handler triggered', response, orderData); // Debug
 
-            // ✅ GOOGLE SHEETS
+            // ✅ Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 body: new URLSearchParams({
                     'Order ID': orderData.id,
                     'Name': orderData.customerName,
-                    'Email': orderData.customerEmail,
                     'Phone': orderData.customerPhone,
-                    'Address': orderData.customerAddress,
-                    'Landmark': orderData.customerLandmark,
-                    'Pincode': orderData.customerPincode,
-                    'District': orderData.customerDistrict,
-                    'State': orderData.customerState,
-                    'Products': orderData.items.map(i => `${i.name} x${i.quantity}`).join(', '),
-                    'Subtotal': orderData.subtotal,
-                    'Total': orderData.total,
-                    'Payment': orderData.paymentMethod,
+                    'Total Order Value': orderData.total,
+                    'Paid Now': amountToCharge,
+                    'Payment Type': window.isCOD ? 'COD Advance' : 'Online Full',
                     'Timestamp': orderData.timestamp
                 })
-            }).catch(() => console.log('Sheets optional'));
+            });
 
-            // ✅ BACKEND SAVE
+            // ✅ Backend
             fetch('/api/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    orderId: orderData.id,
                     ...orderData,
+                    paidAmount: amountToCharge,
                     paymentId: response.razorpay_payment_id,
                     status: window.isCOD ? 'cod-advance-paid' : 'paid'
                 })
-            }).then(() => {
-                // ✅ UI update
-                const detailsHTML = `
-                    <strong>Order ID:</strong> ${orderData.id}<br>
-                    <strong>Customer:</strong> ${orderData.customerName}<br>
-                    <strong>Phone:</strong> ${orderData.customerPhone}<br>
-                    <strong>Address:</strong> ${orderData.customerAddress}, ${orderData.customerLandmark}<br>
-                    <strong>Pincode:</strong> ${orderData.customerPincode}<br>
-                    <strong>District:</strong> ${orderData.customerDistrict}<br>
-                    <strong>State:</strong> ${orderData.customerState}<br><br>
-                    <strong>Total Amount:</strong> ₹${orderData.total.toLocaleString()}<br>
-                    <strong>Payment Status:</strong> ${window.isCOD ? 'COD Advance Paid' : 'Paid Online'}<br>
-                `;
-                const orderDetailsEl = document.getElementById('orderDetails');
-                if (orderDetailsEl) orderDetailsEl.innerHTML = detailsHTML;
+            });
 
-                cart = [];
-                localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
-                updateCartCount();
-
-                showPage('orderConfirm');
-            }).catch(err => console.log('Backend save failed', err));
+            cart = [];
+            localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
+            updateCartCount();
+            showPage('orderConfirm');
         },
 
         prefill: {
