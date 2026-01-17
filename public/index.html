@@ -1267,6 +1267,9 @@
             if (!form.checkValidity()) {
                 alert('Please fill all fields correctly');
                 return;
+                const productsStr = orderData.items.map(item =>
+    `${item.name} x${item.quantity} (₹${item.price})`
+).join(', ');
             }
             
             const orderData = {
@@ -1316,19 +1319,26 @@
         // ✅ Payment success handler
         handler: function(response) {
             // Send order to Google Sheets
-            fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: new URLSearchParams({
-                    'Order ID': orderData.id,
-                    'Name': orderData.customerName,
-                    'Phone': orderData.customerPhone,
-                    'Total Order Value': orderData.total,
-                    'Paid Now': amountToCharge,
-                    'Payment Type': window.isCOD ? 'COD Advance' : 'Online Full',
-                    'Timestamp': orderData.timestamp
-                })
-            });
+          fetch('https://script.google.com/macros/s/AKfycby8M3ufb_YQcF7GOl4ewemWFZuM4NDKtfDwsyV3e_k0IqFd_OOfMrjRQ0_DIjuef1bg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    body: new URLSearchParams({
+        'Order ID': orderData.id,
+        'Name': orderData.customerName,
+        'Email': orderData.customerEmail,            // ✅ Email
+        'Phone': orderData.customerPhone,
+        'Address': orderData.customerAddress,        // ✅ Address
+        'Landmark': orderData.customerLandmark,      // ✅ Landmark
+        'Pincode': orderData.customerPincode,        // ✅ Pincode
+        'District': orderData.customerDistrict,      // ✅ District
+        'State': orderData.customerState,            // ✅ State
+        'Products': productsStr,                      // ✅ Products
+        'Total Order Value': orderData.total,
+        'Paid Now': window.codAdvance,                // ₹100 for COD or full online
+        'Payment Type': window.isCOD ? 'COD Advance' : 'Online Full',
+        'Timestamp': orderData.timestamp
+    })
+});
 
             // Send order to backend
             fetch('/api/orders', {
