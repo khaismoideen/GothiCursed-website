@@ -968,6 +968,9 @@
                                 <option value="cod">📦 Cash on Delivery - ₹100 Advance</option>
                             </select>
                         </div>
+                        <div id="codNote" style="display:none; color:#ff4444; font-size:0.85rem; margin-bottom: 1rem;">
+    ₹100 advance payable now. Remaining amount will be collected on delivery.
+</div>
                     </form>
                     <div class="order-summary">
                         <div class="summary-row">
@@ -1289,25 +1292,30 @@
             initiateRazorpay(orderData);
         }
 
-  function initiateRazorpay(orderData) {
-
-    // ✅ Charge logic
+ function initiateRazorpay(orderData) {
+    // ✅ Decide how much to charge
     const amountToCharge = window.isCOD 
-        ? orderData.codAdvance    // ₹100 for COD
-        : orderData.total;        // full amount for online
+        ? orderData.codAdvance   // ₹100 for COD
+        : orderData.total;       // full amount for online
 
+    // ✅ Razorpay options
     const options = {
         key: "rzp_live_RwbkrFXvcKUa63",
-        amount: amountToCharge * 100,
+        amount: amountToCharge * 100, // in paise
         currency: 'INR',
         name: 'GothiCursed',
-        description: window.isCOD 
-            ? 'COD Advance Payment'
-            : 'Full Order Payment',
+        description: window.isCOD ? 'COD Advance Payment' : 'Full Order Payment',
 
+        // ✅ If user closes popup
+        modal: {
+            ondismiss: function () {
+                alert('Payment cancelled. Order not placed.');
+            }
+        },
+
+        // ✅ Payment success handler
         handler: function(response) {
-
-            // ✅ Google Sheets
+            // Send order to Google Sheets
             fetch('https://script.google.com/macros/s/AKfycbzIjE6IwiYd99FVdOYnkrM1tDhzZej5q1mfRrHPzA3O7DuAwRm8uGHdVpWXFnKU8l9OWg/exec', {
                 method: 'POST',
                 mode: 'no-cors',
@@ -1322,7 +1330,7 @@
                 })
             });
 
-            // ✅ Backend
+            // Send order to backend
             fetch('/api/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1334,24 +1342,27 @@
                 })
             });
 
+            // ✅ Clear cart and update UI
             cart = [];
             localStorage.setItem('gothicursed_cart', JSON.stringify(cart));
             updateCartCount();
             showPage('orderConfirm');
         },
 
+        // ✅ Prefill info
         prefill: {
             name: orderData.customerName,
             contact: orderData.customerPhone,
             email: orderData.customerEmail
         },
+
         theme: { color: '#ffffff' }
     };
 
+    // ✅ Open Razorpay
     const rzp = new Razorpay(options);
     rzp.open();
 }
-
           
     </script>
 </body>
