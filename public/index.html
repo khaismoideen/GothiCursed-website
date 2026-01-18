@@ -1107,6 +1107,18 @@ setTimeout(() => {
 
   console.log('International user:', isInternational);
 }, 500);
+        // 💰 STEP 3: Decide price per product
+function getDisplayPrice(product) {
+    // India price from product
+    const indiaPrice = product.price;
+
+    // Fixed international base price (INR)
+    const internationalPrice = 10000;
+
+    // Decide based on country
+    return isInternational ? internationalPrice : indiaPrice;
+}
+
 
 
 
