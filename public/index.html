@@ -1188,7 +1188,10 @@ function getDisplayPrice(product) {
                     <div class="detail-name">${product.name}</div>
                     <div class="price-section">
                         <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
-                        <span class="discounted-price">₹${product.price.toLocaleString()}</span>
+<span class="discounted-price">
+    ₹${getDisplayPrice(product).toLocaleString()}
+</span>
+
                         <span class="discount-badge">${product.discount}% OFF</span>
                     </div>
                     <div class="detail-description">${product.fullDesc}</div>
