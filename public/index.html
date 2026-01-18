@@ -1018,6 +1018,13 @@
     </footer>
 
     <script>
+        const currencyMap = {
+  IN: { code: 'INR', symbol: '₹', rate: 1 },
+  US: { code: 'USD', symbol: '$', rate: 0.012 },
+  GB: { code: 'GBP', symbol: '£', rate: 0.0095 },
+  EU: { code: 'EUR', symbol: '€', rate: 0.011 }
+};
+
         const products = [
             {
                 id: 1,
@@ -1118,6 +1125,16 @@ function getDisplayPrice(product) {
     // Decide based on country
     return isInternational ? internationalPrice : indiaPrice;
 }
+        function getCurrency() {
+  return currencyMap[userCountry] || currencyMap.US;
+}
+
+function formatPrice(inrAmount) {
+  const c = getCurrency();
+  const converted = inrAmount * c.rate;
+  return `${c.symbol}${converted.toFixed(0)}`;
+}
+
 
 
 
@@ -1189,7 +1206,8 @@ function getDisplayPrice(product) {
                     <div class="price-section">
                         <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
 <span class="discounted-price">
-    ₹${getDisplayPrice(product).toLocaleString()}
+   ${formatPrice(getDisplayPrice(product))}
+
 </span>
 
                         <span class="discount-badge">${product.discount}% OFF</span>
