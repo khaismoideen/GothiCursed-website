@@ -1096,6 +1096,18 @@ fetch('https://ipapi.co/json/')
   .catch(() => {
     console.log('Geo detection failed, using India');
   });
+        // 🌎 STEP 2: Decide market (India vs International)
+let isInternational = false;
+
+// Run after country detection
+setTimeout(() => {
+  if (userCountry !== 'IN') {
+    isInternational = true;
+  }
+
+  console.log('International user:', isInternational);
+}, 500);
+
 
 
         let cart = JSON.parse(localStorage.getItem('gothicursed_cart')) || [];
