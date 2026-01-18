@@ -1159,7 +1159,10 @@ function getDisplayPrice(product) {
                     </div>
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
-                        <div class="product-price">₹${product.price.toLocaleString()}</div>
+<div class="product-price">
+    ₹${getDisplayPrice(product).toLocaleString()}
+</div>
+
                         <div class="product-description">${product.shortDesc}</div>
                     </div>
                 </div>
